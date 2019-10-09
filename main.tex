@@ -88,7 +88,7 @@
 
 \title{Control Automático\\Proyecto 2}
 
-\author{Jorge Rojas Meza\\201006018\\Julio Viveroe Hernández\\}
+\author{Jorge Rojas Meza\\201006018\\Adriana Rojas Mesén\\2014059900\\Julio Viveros Hernández\\-\\German Monge Cerdas}
 \date{\today}
 \maketitle
 \section{Introducción}
@@ -149,7 +149,177 @@ A continuación se presentan algunas relaciones de interés para el desarrollo d
 Donde $\xi$ es el factor de amortiguamiento, MF es el Margen de Fase, $M_r$ el pico máximo de ganancia a la frecuencia de resonancia $\omega_r$, $M_p$ el sobreimpulso y $e_{ss}$ el error de estado estacionario que depende de la entrada R(s). Se puede además estimar de forma aproximada el tiempo de levantamiento como t_r $\approx$ 1.8/$\omega_n$. Además se recuerda que el ancho de banda se determina en la frecuencia de -3dB.
 
 \section{Cuestionamientos}
-1. Asumiendo que H(s) = 1. Encuentre la función de transferencia de lazo abierto a partirde los diagramas de Bode proporcionados.
+1. Asumiendo que H(s) = 1. Encuentre la función de transferencia de lazo abierto a partirde los diagramas de Bode proporcionados.\\
+
+\textbf{Solución}
+
+Llámese a la función de transefencia buscada G(s). Tomándo como base los puntos de interés marcados en base a la Figura 1, representados en la Figura 3, y observándose que en el punto 1 (de la Figura 3):
+
+\begin{equation*}
+    M_r \approx -27,03125 dB
+\end{equation*}
+
+
+Sustutiyendo el valor de $M_r$ en la ecuación (2) se tiene que:
+
+\begin{equation*}
+    \xi \approx -0.0839
+\end{equation*}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=0.8\textwidth]{diag3.jpg}
+  \caption{Respuesta en Frecuencia del Sistema en análisis con los puntos de interés}
+  \label{fig:ejemplo}
+\end{figure}
+
+
+De igual forma utilizando la ecuación (3), despejando $\omega_n$ con el valor de $\xi$ obtenido anteriormente:
+
+\begin{equation*}
+    \omega_n = 61.8059
+\end{equation*}
+
+
+Además obsérvece que el punto 1 es un polo doble, por lo tanto:
+
+\begin{equation}
+    G(s)= ((\frac{s}{\omega_n})^2 + 2\frac{\xi}{\omega_n}s +1) = ((\frac{s}{61.8059})^2 +2*\frac{-0.0839}{61.8059}s + 1)
+\end{equation}
+
+Analizando el punto de referencia 2, de la Figura 3; se trazan líneas tangentes en la curva para determinar la existencia de otros polos.
+
+En el punto 3, de la Figura 3, el polo se ajustó con la gráfica de fase, donde en $10^4$ Hz es -175$\^°$ y el pico máximo que llega a 140$\^°$.
+
+Por lo tanto la función de transferencia del sistema queda como:
+
+\begin{equation}
+    G(s) = \frac{0.45+ 0.0009217s}{0.000000004.629s^4+0.0002677s^3+0.0338937s^2 +s}
+\end{equation}
+
+Para ingresar la Función de Transferencia a \textbf{Scilab} se utilizaron varios comandos. En primer lugar, para definir a la variable \textit{s} se usó:
+
+\begin{verbatim}
+    s= poly(0, 's')
+\end{verbatim}
+
+Una vez definido \textit{s} como variable de estado, se procedió a crear la función de transferencia como:
+
+\begin{verbatim}
+    Gs= syslin('c', G(s))
+\end{verbatim}
+
+Donde G(s)= corresponde a la función de transferencia en la ecuación (7).\\
+
+\\
+\\
+%------------------Inciso 2----------------%
+2. Determine el error de estado estacionario del sistema.\\
+\\
+\textbf{Solución}\\
+
+
+\textbf{NOTA: G(s) = FT} para los archivos de Scilab.
+Utilizando el comando para determinar el error de estado estacionario de \textit{Scilab}, css:
+
+\begin{verbatim}
+    css = horner(s*FT*Rs, 0)
+\end{verbatim}
+
+Donde Rs es una entrada escalón unitario $Rs = \frac{1}{s}$, se obtuvo que el error de estado estacionario es:
+\begin{equation}
+    e_{ss} \to \infty
+\end{equation}
+\\
+
+%------------------Inciso 3----------------%
+3. Determine el error en estado estacionario en lazo cerrado (Scilab).\\
+\\
+\textbf{Solución}\\
+
+Cerrando el lazo mediante:
+
+\begin{verbatim}
+    css = horner(s*Rs/(1+FT), 0)
+\end{verbatim}
+
+\begin{equation}
+    e_{ss} = 0
+\end{equation}
+\\
+
+%------------------Inciso 4----------------%
+4. Utilizando el Diagrama de Nyquist, evalúe la estabilidad en lazo cerrado $L(s) = G(s)H(s)$. (Scilab).\\
+\\
+
+
+
+%------------------Inciso 5----------------%
+5. Diseñe un compensador tipo PD y evalúe la estabilidad del sistema para las entradas solicitadas, además corrobore si se cumplen las especificaciones de diseño a través de la carta de Nichols.\\
+
+A partir del código siguiente se generó el diagrama de Nichols del Sistema al agregar los controladores. Obsérvese la Figura 4
+
+\begin{verbatim}
+    FT_PD = PD*FT
+black(FT_PD)
+nicholschart(colors=color('green')*[1,1])
+/////// PI
+
+disp("-----------")
+disp(" 	PD	")
+disp("-----------")
+
+
+/////// PID
+
+disp("-----------")
+disp(" 	PID	")
+disp("-----------")
+
+\end{verbatim}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=0.8\textwidth]{nichols.jpg}
+  \caption{Diagrama de Nichols del sistema compensado.}
+  \label{fig:ejemplo}
+\end{figure}
+
+
+%------------------Inciso 6----------------%
+6. Grafique la respuesta a las dos entradas solicitadas (escalón y rampa) con el compensador PD diseñado, además calcula el error de estado estacionario.\\
+
+
+
+%------------------Inciso 7----------------%
+7. Trace el diagrama de Bode de lazo cerrado con el compensador disẽnado en (5) y comparelo con la
+carta de Nichols obtenida en (5) gŕaficamente. (SCilab).\\
+
+
+
+
+%------------------Inciso 8----------------%
+8. Repita los puntos (5) y (6) para un compensador PI, PID, de adelanto y de atraso.\\
+
+
+%----------------Inciso 9----------------%
+9. Realice un ańalisis comparativo en el informe de los resultados obtenidos en los puntos del (5) al (7)
+entre los reguladores obtenidos.¿Cúal regulador es el mejor?\\
+
+
+
+
+%------------------Inciso 10-------------%
+10. En todos los cuestionamientos utilice la herramienta Scilab, y coloque en el informe los comandos (scripts) que utiliźo para desarrollar cada respuesta, y utilice las gŕaficas resultantes para detallar su ańalisis y conclusiones\\
+
+\section{Analisis de resultados}
+
+Para obtener la función de transferencia desde el diagrama de bode se utilizaron varios métodos gráficos de forma tal que se obtuvo un $\omega_n=9.8Hz$, un $\gamma=0.09$
+
+\begin{equation}
+    z = 0
+    \label{nombre}
+\end{equation}
 
 
 \nocite{*}
