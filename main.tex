@@ -88,7 +88,7 @@
 
 \title{Control Automático\\Proyecto 2}
 
-\author{Jorge Rojas Meza\\201006018\\Adriana Rojas Mesén\\2014059900\\Julio Viveros Hernández\\-\\German Monge Cerdas}
+\author{Jorge Rojas Meza\\201006018\\Adriana Rojas Mesén\\2014059900\\Julio Viveros Hernández\\200946192\\German Monge Cerdas\\2015035612}
 \date{\today}
 \maketitle
 \section{Introducción}
@@ -96,7 +96,7 @@ Se analizó en el laboratorio cierto sistema y se construyó su respuesta en fre
 
 \section{Problema}
 
-Considere el Diagrama de Bode ed la función de transferencia en lazo cerrado directo que se presenta en la Figura 1.\\
+Considere el Diagrama de Bode de la función de transferencia en lazo cerrado directo que se presenta en la Figura 1.\\
 \begin{figure}
   \centering
     \includegraphics[width=0.6\textwidth]{Figura1.jpg}
@@ -251,11 +251,24 @@ Cerrando el lazo mediante:
 %------------------Inciso 4----------------%
 4. Utilizando el Diagrama de Nyquist, evalúe la estabilidad en lazo cerrado $L(s) = G(s)H(s)$. (Scilab).\\
 \\
+\textbf{Solución}\\
+Para evaluar la estabilidad en lazo cerrado se ocupa saber si existe algún cero en el lado derecho del plano, para ello se obtiene el diagrama de Nyquist de la función en lazo abierto, asi, de esta forma logramos 
 
+\begin{figure}
+  \centering
+    \includegraphics[width=0.8\textwidth]{4nyquist_FT.png}
+  \caption{Diagrama de Nyquist para lazo abierto del sistema}
+  \label{Nyq}
+\end{figure}
 
 
 %------------------Inciso 5----------------%
 5. Diseñe un compensador tipo PD y evalúe la estabilidad del sistema para las entradas solicitadas, además corrobore si se cumplen las especificaciones de diseño a través de la carta de Nichols.\\
+
+\textbf{Solución}\\
+
+
+
 
 A partir del código siguiente se generó el diagrama de Nichols del Sistema al agregar los controladores. Obsérvese la Figura 4
 
@@ -288,6 +301,8 @@ disp("-----------")
 
 %------------------Inciso 6----------------%
 6. Grafique la respuesta a las dos entradas solicitadas (escalón y rampa) con el compensador PD diseñado, además calcula el error de estado estacionario.\\
+\textbf{Solución}\\
+
 
 
 
@@ -295,17 +310,27 @@ disp("-----------")
 7. Trace el diagrama de Bode de lazo cerrado con el compensador disẽnado en (5) y comparelo con la
 carta de Nichols obtenida en (5) gŕaficamente. (SCilab).\\
 
+\textbf{Solución}\\
+
+
+
 
 
 
 %------------------Inciso 8----------------%
 8. Repita los puntos (5) y (6) para un compensador PI, PID, de adelanto y de atraso.\\
 
+\textbf{Solución}\\
+
+
+
+
 
 %----------------Inciso 9----------------%
 9. Realice un ańalisis comparativo en el informe de los resultados obtenidos en los puntos del (5) al (7)
 entre los reguladores obtenidos.¿Cúal regulador es el mejor?\\
 
+\textbf{Solución}\\
 
 
 
