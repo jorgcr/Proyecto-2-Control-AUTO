@@ -350,7 +350,7 @@ El código utilizado para obtener el diagrama de Nyquist es el siguiente:
 El compensador PD se construye de la siguiente manera: $PD = k*(s+z)$, donde $z = \frac{w_{c}}{tan \theta}$. El ángulo de fase máxima ($\theta$) se tomó como $90^{o}$ y $w_{c} = 1.012\times10^-1$. Observando que idealmente el Margen de Fase sea mayor a $60^{o}$, el sobreimpulso menor al 20$\%$ y el error generado por la rampa menor al 10\% se tiene que dicho compensador no era óptimo para proponerse, por lo tanto se generó un nuevo compensador PD al variar los datos de $K$ y $z$, el cual es mostrado a continuación:
 
 \begin{equation}
-    PD = .0004 * (s+2500)
+    PD = 0.0004 * (s+2500)
 \end{equation}
 
 \bigskip
@@ -431,8 +431,6 @@ A partir del siguiente código se generó el diagrama de Nichols del sistema al 
 %------------------Inciso 6----------------%
 \textbf{6.} Grafique la respuesta a las dos entradas solicitadas (escalón y rampa) con el compensador PD diseñado, además calcula el error de estado estacionario.\\
 
-\bigskip
-
 \textbf{Solución}
 
 \bigskip
@@ -445,36 +443,37 @@ Los errores son obtenidos con los siguientes comandos.
     Rs = 1/s^2 // Rampa
     c_ss = horner(s*Rs/(1+PD*FT),0)
 \end{verbatim}
-\bigskip
-Dando como resultado, para escalón $error = 0$ y para rampa $error = 14.81$.
 
-Con entrada escalón se obtiene la respuesta mostrada en la \ref{fig:fig8}.
+Dando como resultado, para escalón $error = 0$ y para rampa $error = 2.222$.\\
+
+Con entrada escalón se obtiene la respuesta mostrada en la \ref{fig:fig8}.\\
 
 \begin{figure}[hbtp]
 	\centering
 	\includegraphics[width = .65 \columnwidth]{6escalon.png} 
-	\caption[Figura7]{Diagrama de bode del PD con entrada escalón. [Fuente: propia]} 
+	\caption[Figura7]{Respuesta con compensador PD con entrada escalón. [Fuente: propia]} 
 	\label{fig:fig8} 
 \end{figure}
-\bigskip
-\bigskip
 
-Se observa que suavemente la curva tiende a 1, por lo tanto, el sistema con un compensador PD logra tener estabilidad con una entrada de tipo escalón.
+Se observa que suavemente la curva tiende a 1, por lo tanto, el sistema con un compensador PD logra tener estabilidad con una entrada de tipo escalón.\\
 
-Asimismo, con entrada rampa se obtiene la respuesta mostrada en la \ref{fig:fig9}.
+Asimismo, con entrada rampa se obtiene la respuesta mostrada en la \ref{fig:fig9}.\\
 
 \begin{figure}[hbtp]
 	\centering
 	\includegraphics[width = .65 \columnwidth]{6rampa.png} 
-	\caption[Figura7]{Diagrama de bode del PD con entrada rampa. [Fuente: propia]} 
+	\caption[Figura7]{Respuesta con compensador PD con entrada rampa. [Fuente: propia]} 
 	\label{fig:fig9} 
 \end{figure}
+
 Se aprecia que la curva tiene una ligera curva y no tiende a un número en específico, por lo tanto, el sistema con un compensador PD no logra tener estabilidad con una entrada de tipo rampa.
 
-%------------------Inciso 7----------------%
-\textbf{7.} Trace el diagrama de Bode de lazo cerrado con el compensador diseñado en (5) y compárelo con la carta de Nichols obtenida en (5) gráficamente. (Scilab).
+\bigskip
 
 \bigskip
+
+%------------------Inciso 7----------------%
+\textbf{7.} Trace el diagrama de Bode de lazo cerrado con el compensador diseñado en (5) y compárelo con la carta de Nichols obtenida en (5) gráficamente. (Scilab).\\
 
 \textbf{Solución}
 
@@ -496,8 +495,6 @@ En la \ref{fig:bodePD} se muestra el diagrama de Bode de lazo cerrado con el com
 %------------------Inciso 8----------------%
 \textbf{8.} Repita los puntos (5) y (6) para un compensador PI, PID, de adelanto y de atraso.\\
 
-\bigskip
-
 \textbf{Solución}
 
 \bigskip
@@ -506,16 +503,17 @@ En la \ref{fig:bodePD} se muestra el diagrama de Bode de lazo cerrado con el com
 
 \bigskip
 
-Para el desarrollo del compensador PI se consideró que tiene que tener la forma $PI= Kp*(1+1/(s*Ki))$, donde se obtuvieron los factores Kp y Ki de manera que se cumplan los requisitos anteriormente mencionados. Se llegó a que el compensador corresponde a lo siguiente.
+Para el desarrollo del compensador PI se consideró que tiene que tener la forma $PI= PI = Kp * (s+Ki/Kp)/s$, donde se obtuvieron los factores Kp y Ki de manera que se cumplan los requisitos anteriormente mencionados. Se llegó a que el compensador corresponde a lo siguiente: $PI = 1 * (s+0.000005/1)/s$. 
 
-\begin{equation}
-    PI = 4.14 * (1+\frac{1}{s*0.4})
-\end{equation}
-
+\bigskip
 
 \textbf{Evaluación de estabilidad}
 
-Se utiliza el criterio de Nyquist para evaluar si la entrada es estable para el compensador PI con una entrada escalón. Esta respuesta se muestra en la \ref{fig:fig11}.
+\bigskip
+
+Se utiliza el criterio de Nyquist para evaluar si la entrada es estable para el compensador PI con una entrada escalón. Esta respuesta se muestra en la \ref{fig:fig11}. De la misma manera se usa el criterio de Nyquist con una entrada rampa. La curva se muestra en la \ref{fig:fig12}.
+
+
 \bigskip
 
 \begin{figure}[hbtp]
@@ -525,8 +523,6 @@ Se utiliza el criterio de Nyquist para evaluar si la entrada es estable para el 
 	\label{fig:fig11} 
 \end{figure}
 
-De la misma manera se usa el criterio de Nyquist con una entrada rampa. La curva se muestra en la \ref{fig:fig12}.
-\bigskip
 
 \begin{figure}[hbtp]
 	\centering
@@ -535,18 +531,61 @@ De la misma manera se usa el criterio de Nyquist con una entrada rampa. La curva
 	\label{fig:fig12} 
 \end{figure}
 
+\bigskip
+
 \textbf{Carta de Nichols}
 
 Se generó la carta de Nichols del sistema con el compensador PI. Obsérvese la \ref{fig:NycholsPI}.
 
 \begin{figure}[hbtp]
 	\centering
-	\includegraphics[width = 0.7 \columnwidth]{nichols2.png} 
+	\includegraphics[width = 0.7 \columnwidth]{nicholsPI.png} 
 	\caption[Figura7]{Carta de Nichols del sistema con PI. [Fuente: propia, mediante Scilab]} 
 	\label{fig:NycholsPI} 
 \end{figure}
 
+\bigskip
 
+Seguidamente se solicita graficar la respuesta a las dos entradas de referencia solicitadas (escalón y rampa) con el compensador PI diseñado. En la \ref{fig:PIesc} se muestra la respuesta del escalón y en la \ref{fig:PIram} la respuesta de la rampa.
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width = 0.7 \columnwidth]{respuestaPIescalon.png} 
+	\caption[Figura7]{Respuesta al escalón del sistema con PI [Fuente: propia, mediante Scilab]} 
+	\label{fig:PIesc} 
+\end{figure}
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width = 0.7 \columnwidth]{respuestaPIrampa.png} 
+	\caption[Figura7]{Respuesta a la rampa del sistema con PI. [Fuente: propia, mediante Scilab]} 
+	\label{fig:PIram} 
+\end{figure}
+
+Los errores de entrada escalón y rampa son obtenidos con los siguientes comandos.
+
+\begin{verbatim}
+    Rs = 1/s 
+    c_ss = horner(s*Rs/(1+PI*FT),0)
+    Rs = 1/s^2 // Rampa
+    c_ss = horner(s*Rs/(1+PI*FT),0)
+\end{verbatim}
+
+Dando como resultado, para escalón $error = 0$ y para rampa $error = 0$.\\
+
+\bigskip
+
+Como último punto se solicita obtener el diagrama de Bode del sistema en lazo cerrado (\ref{fig:bodePI}) con la curva del diagrama de Nyquist encontrada en la 
+
+\begin{figure}[hbtp]
+	\centering
+	\includegraphics[width = 0.7 \columnwidth]{BodePI.png} 
+	\caption[Figura7]{Diagrama de Bode del sistema con PI [Fuente: propia, mediante Scilab]} 
+	\label{fig:bodePI} 
+\end{figure}
+
+
+\bigskip
 
 \textbf{2. Compensador PID}
 
@@ -554,7 +593,7 @@ Se generó la carta de Nichols del sistema con el compensador PI. Obsérvese la 
 
 Para el compensador PID se utilizó la herramienta de Xcos de scilab, donde se logró llegar al sistema de la \ref{pidb} y este con los valores obtenidos de scilab para crear un PID, los cuales dieron kp=184.6, ki=1020, kd=4.717 y N= 7981, se usaron para llegar a la respuesta de la \ref{resppid}. \\
 
-El error de estado estacionario para el PID en lazo cerrado tanto para entrada de rampa como entrada escalón fue de 0, el siguiente código fue el utilizado para obtener dicha respuesta.\\
+El error de estado estacionario para el PID en lazo cerrado tanto para entrada de rampa como entrada escalón fue de 0, el siguiente código fue el utilizado para obtener dicha respuesta:
 
 \begin{verbatim}
     kp=184.6
@@ -584,7 +623,6 @@ El error de estado estacionario para el PID en lazo cerrado tanto para entrada d
 	\label{resppid} 
 \end{figure}
 
-
 \begin{figure}[hbtp]
 	\centering
 	\includegraphics[width = .75 \columnwidth]{nicPID_.png} 
@@ -613,6 +651,8 @@ El error de estado estacionario para el PID en lazo cerrado tanto para entrada d
 
 %----------------Inciso 9----------------%
 \textbf{9.} Realice un análisis comparativo en el informe de los resultados obtenidos en los puntos del (5) al (7) entre los reguladores obtenidos.¿Cuál regulador es el mejor?\\
+
+ 
 
 \bigskip
 
